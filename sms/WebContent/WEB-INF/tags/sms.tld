@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>Header</shortname>
+	
+	<tag>
+		<name>HeaderFooter</name>
+		<tagclass>com.sms.taglibs.HeaderFooter</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Tag For Common HeaderFooter</info>
+		
+		<attribute>
+			<name>isUserNameAndLogoutReq</name>
+			<type>java.lang.Boolean</type>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>isBackButtonReq</name>
+			<type>java.lang.Boolean</type>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>pageTitle</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>backUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>SiteHeaderFooter</name>
+		<tagclass>com.sms.taglibs.SiteHeaderFooter</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Tag For Common SiteHeaderFooter</info>
+
+		<attribute>
+			<name>schoolId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>tabId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>Title</name>
+		<tagclass>com.sms.taglibs.PageTitle</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Tag For Common Page Title</info>
+
+		<attribute>
+			<name>pageTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>Content</name>
+		<tagclass>com.sms.taglibs.ContentView</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Tag For Content View</info>
+
+		<attribute>
+			<name>contentBox</name>
+			<type>com.sms.model.ContentBox</type>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

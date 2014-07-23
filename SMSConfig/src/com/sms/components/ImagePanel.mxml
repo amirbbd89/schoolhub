@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				width="510" height="450" keyDown="onKeyDown(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			import mx.managers.PopUpManager;
+			
+			private var fileReference:FileReference;
+			private var fileId:String = "test";
+			
+			public function set uploadFileId(value:String):void {
+				fileId = value;
+			}
+			
+			protected function onKeyDown(event:KeyboardEvent):void {
+				if(event.keyCode == Keyboard.ESCAPE){
+					PopUpManager.removePopUp(this);
+				}
+			}
+			
+			protected function onBrowse():void {
+				fileReference = new FileReference();
+				fileReference.addEventListener(Event.SELECT, onFileSelect);
+				fileReference.browse([new FileFilter("Image Files(.JPG,.JPEG,.GIF,.PNG)", "*.jpg;*.jpeg;*.gif;*.png;*.JPG;*.JPEG;*.GIF;*.PNG")]);
+			}
+			
+			protected function onCancel():void {
+				fileReference = null;
+				image.source = null;
+				uploadFileName.label = "";
+				uploadFileName.setProgress(0, 100);
+				browse.visible = true;
+			}
+			
+			private function onFileSelect(event:Event):void {
+				uploadFileName.name = "";
+				uploadFileName.setProgress(0, 100);
+				fileReference.addEventListener(Event.COMPLETE, onFileLoadComplete);
+				fileReference.addEventListener(ProgressEvent.PROGRESS, onProgress);
+				fileReference.load();
+			}
+			
+			private function onProgress(event:ProgressEvent):void {
+				uploadFileName.setProgress(event.bytesLoaded, event.bytesTotal);
+			}
+			
+			private function onFileLoadComplete(event:Event):void {
+				browse.visible = false;
+				image.source = fileReference.data;
+				uploadFileName.label = fileReference.name;
+			}
+			
+			public function uploadFile(onUploadSuccess:Function, onError:Function):void {
+				if(fileReference){
+					var uploadRequest:URLRequest = new URLRequest(FlexGlobals.topLevelApplication.parameters.appContext+"/image/saveFile.htm?fileId="+fileId);
+					fileReference.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA, onUploadSuccess);
+					fileReference.addEventListener(IOErrorEvent.IO_ERROR, onError);
+					fileReference.addEventListener(HTTPStatusEvent.HTTP_STATUS, onError);
+					
+					fileReference.upload(uploadRequest);
+				} else {
+					onUploadSuccess(new DataEvent(DataEvent.UPLOAD_COMPLETE_DATA));
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:ProgressBar width="405" id="uploadFileName" mode="manual" x="0" y="0"/>
+	<s:Button label="Browse" visible="true" id="browse" x="410" y="0" click="onBrowse()"/>
+	<s:Button label="Cancel" visible="{!browse.visible}" x="410" y="0" click="onCancel()"/>
+	<s:Image x="0" y="30" id="image" width="480" height="360"/>
+</mx:Canvas>

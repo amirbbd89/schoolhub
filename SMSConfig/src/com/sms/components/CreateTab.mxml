@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="300" height="160" verticalGap="0" layout="absolute"
+		 showCloseButton="true" close="txtPopUpClose()" keyDown="onKeyDown(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.sms.model.Tab;
+			import mx.managers.PopUpManager;
+			
+			[Bindable]public var tab:Tab;
+			[Bindable]public var maxOrder:int;
+			protected function onSave():void{
+				tab.menuLable = tabName.text;
+				tab.order = order.value;
+				tab.active = int(activeGroup.selectedValue);
+				
+				if(tab.tabId != null && tab.tabId != ""){
+					parentDocument.onSaveTab(tab, true);
+				} else {
+					parentDocument.onSaveTab(tab);
+				}
+				
+				txtPopUpClose();
+			}
+			
+			protected function txtPopUpClose():void{
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function onKeyDown(event:KeyboardEvent):void{
+				if(event.keyCode == Keyboard.ESCAPE){
+					txtPopUpClose();
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:LinkButton icon="@Embed('/com/sms/assets/images/saveIcon.png')" label="Save" toolTip="Save" click="onSave()"/>
+	<s:Label x="10" y="40" text="Tab Name"/>
+	<s:Label x="10" y="70" text="Order"/>
+	<s:Label x="10" y="100" text="Active"/>
+	<s:TextInput x="70" y="35" id="tabName" width="180" text="{tab.menuLable}"/>
+	<s:NumericStepper x="70" y="65" id="order" width="180" value="{tab.order}" maximum="{maxOrder}"/>
+	<s:RadioButtonGroup id="activeGroup" selectedValue="{tab.active}"/>
+	<s:RadioButton x="70" y="95" value="1" label="Yes" group="{activeGroup}"/>
+	<s:RadioButton x="120" y="95" value="0" label="No" group="{activeGroup}"/>
+</mx:TitleWindow>

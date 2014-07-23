@@ -1,0 +1,140 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+mx|ToolTip{
+	backgroundColor:#cee9f5;
+	fontFamily:Tahoma;
+	fontSize:10;
+}
+
+mx|TitleWindow{
+	borderStyle:solid;
+	borderThickness:2;
+	cornerRadius:0;
+	borderColor:#7FCEFF;
+	backgroundColor:#ffffff;
+	titleStyleName:"custTitleWindowStyle";
+}
+.custTitleWindowStyle {
+	color: #000000;
+	fontWeight: bold;
+}
+
+mx|LinkButton{
+	color: #000000;
+	paddingLeft: 3;
+	paddingRight: 3;
+	paddingTop: 1;
+	paddingBottom: 1;
+	cornerRadius: 5;
+	textRollOverColor: #675643;
+}
+
+mx|AdvancedDataGrid { 
+	backgroundAlpha: 1; 
+	backgroundColor: #B8DCEC; 
+	alternatingItemColors: #FFFFFF, #E8F8F9; 
+	selectionColor: #7FCEFF; 
+	rollOverColor: #CEE9F5; 
+	headerColors: #CEE9F5,#B8DCEC;
+	letterSpacing: 0; 
+	horizontalGridLines: false; 
+	verticalGridLineColor: #B8DCEC; 
+	textRollOverColor: #000000;
+	color: #000000; 
+	textSelectedColor: #000000; 
+	textIndent: 0; 
+	fontFamily: Tahoma ; 
+	fontSize: 11;
+	fontWeight: normal;
+	borderColor:#B8DCEC;
+	headerStyleName: "MyDataGridStyleHeader";
+}
+.MyDataGridStyleHeader {
+	color: #000000;
+	fontFamily: Tahoma;
+	fontSize: 11;
+	rollOverColor:#CEE9F5;
+}
+
+mx|HScrollBar{
+	downArrowUpSkin: Embed(source="/com/sms/assets/images/scrollbar/downArrow.png");
+	downArrowOverSkin: Embed(source="/com/sms/assets/images/scrollbar/downArrow.png");
+	downArrowDownSkin: Embed(source="/com/sms/assets/images/scrollbar/downArrow.png");
+	upArrowUpSkin: Embed(source="/com/sms/assets/images/scrollbar/upArrow.png");
+	upArrowOverSkin: Embed(source="/com/sms/assets/images/scrollbar/upArrow.png");
+	upArrowDownSkin: Embed(source="/com/sms/assets/images/scrollbar/upArrow.png");
+	thumbDownSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	thumbUpSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	thumbOverSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	trackSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/scrolltrack.png",
+		scaleGridLeft="7", scaleGridTop="4", 
+		scaleGridRight="8", scaleGridBottom="6" ); 
+}
+
+mx|VScrollBar {
+	downArrowUpSkin: Embed(source="/com/sms/assets/images/scrollbar/downArrow.png");
+	downArrowOverSkin: Embed(source="/com/sms/assets/images/scrollbar/downArrow.png");
+	downArrowDownSkin: Embed(source="/com/sms/assets/images/scrollbar/downArrow.png");
+	upArrowUpSkin: Embed(source="/com/sms/assets/images/scrollbar/upArrow.png");
+	upArrowOverSkin: Embed(source="/com/sms/assets/images/scrollbar/upArrow.png");
+	upArrowDownSkin: Embed(source="/com/sms/assets/images/scrollbar/upArrow.png");
+	thumbDownSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	thumbUpSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	thumbOverSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	trackSkin: 
+		Embed(source="/com/sms/assets/images/scrollbar/scrolltrack.png",
+		scaleGridLeft="7", scaleGridTop="4", 
+		scaleGridRight="8", scaleGridBottom="6" );       
+}
+
+mx|Alert{
+	color : #000000;
+	buttonStyleName: "buttonStyle";
+	title-style-name: "alertTitleStyle";
+	messageStyleName: "messageStyle";
+	header-height:20;
+	border-thickness: 2;
+	background-color: #b8dcec;
+	border-style :solid;
+	header-colors : #7FCEFF,#7FCEFF;
+	footer-colors : #7FCEFF,#7FCEFF;
+	border-color : #7FCEFF;
+	cornerRadius:0;
+}
+.alertTitleStyle{
+	font-family: Tahoma;
+	font-size: 12;
+	font-weight :bold;
+	text-align :left;
+	color:#000000;
+}
+.messageStyle{
+	font-family: Tahoma;
+	font-size: 11;
+	font-weight: bold;
+}
+.buttonStyle{
+	theme-color: #b8dcec;
+	color: #000000;
+}

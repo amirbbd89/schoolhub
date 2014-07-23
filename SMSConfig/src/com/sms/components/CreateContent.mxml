@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="600" height="400" verticalGap="0" layout="absolute"
+		 showCloseButton="true" close="txtPopUpClose()" keyDown="onKeyDown(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.sms.model.ContentBox;
+			
+			import mx.managers.PopUpManager;
+			
+			[Bindable]public var contentBox:ContentBox;
+			[Bindable]public var maxOrder:int;
+			private var imagePanel:ImagePanel;
+			
+			protected function onSave():void{
+				contentBox.title = contentTitle.text;
+				contentBox.contentTxt = contentTxt.text;
+				contentBox.order = order.value;
+				contentBox.active = int(activeGroup.selectedValue);
+				
+				if(contentBox.contentBoxId != null && contentBox.contentBoxId != ""){
+					parentDocument.onSaveContent(contentBox, true);
+				} else {
+					parentDocument.onSaveContent(contentBox);
+				}
+				
+				txtPopUpClose();
+			}
+			
+			protected function txtPopUpClose():void{
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function onKeyDown(event:KeyboardEvent):void{
+				if(event.keyCode == Keyboard.ESCAPE){
+					txtPopUpClose();
+				}
+			}
+			
+			protected function imageGroupChange(event:Event):void{
+				if(Boolean(imageGroup.selectedValue)){
+					imagePanel = new ImagePanel();
+					imagePanel.y = 280;
+					this.addChild(imagePanel);
+					this.height = this.height + 450;
+				} else {
+					this.removeChild(imagePanel);
+					this.height = this.height - 450;
+					imagePanel = null;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:LinkButton icon="@Embed('/com/sms/assets/images/saveIcon.png')" label="Save" toolTip="Save" click="onSave()"/>
+	<s:Label x="10" y="40" text="Title"/>
+	<s:Label x="10" y="70" text="Text"/>
+	<s:Label x="10" y="190" text="Order"/>
+	<s:Label x="10" y="220" text="Active"/>
+	<s:Label x="10" y="250" text="Image"/>
+	<s:TextInput x="70" y="35" id="contentTitle" width="380" text="{contentBox.title}"/>
+	<s:TextArea x="70" y="65" id="contentTxt" heightInLines="8" width="380" text="{contentBox.contentTxt}"/>
+	<s:NumericStepper x="70" y="185" id="order" width="180" value="{contentBox.order}" maximum="{maxOrder}"/>
+	
+	<s:RadioButtonGroup id="activeGroup" selectedValue="{contentBox.active}"/>
+	<s:RadioButton x="70" y="215" value="1" label="Yes" group="{activeGroup}"/>
+	<s:RadioButton x="120" y="215" value="0" label="No" group="{activeGroup}"/>
+	
+	<s:RadioButtonGroup id="imageGroup" selectedValue="{contentBox.image}" change="imageGroupChange(event)"/>
+	<s:RadioButton x="70" y="245" value="true" label="Yes" group="{imageGroup}"/>
+	<s:RadioButton x="120" y="245" value="false" label="No" group="{imageGroup}"/>
+</mx:TitleWindow>

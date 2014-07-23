@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" applicationComplete="onApplicationComplete(event)" xmlns:components="com.sms.components.*">
+	<fx:Style source="com/sms/assets/css/style.css"/>
+	<fx:Script source="com/sms/script/CommonConfig.as"/>
+	<fx:Script source="com/sms/script/TabConfig.as"/>
+	<fx:Script source="com/sms/script/ContentConfig.as"/>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RemoteObject id="smsAMFObj" showBusyCursor="true" makeObjectsBindable="true" destination="smsAMF" endpoint="{appContext}/messagebroker/amf" fault="faultHandler(event)">
+			<s:method name="updateTab" result="tabResultHandler(event)"/>
+			<s:method name="insertTab" result="tabResultHandler(event)"/>
+			<s:method name="deleteTab" result="tabResultHandler(event)"/>
+			<s:method name="getAllTab" result="tabResultHandler(event)"/>
+			<s:method name="updateContent" result="contentResultHandler(event)"/>
+			<s:method name="insertContent" result="contentResultHandler(event)"/>
+			<s:method name="deleteContent" result="contentResultHandler(event)"/>
+			<s:method name="getAllContent" result="contentResultHandler(event)"/>
+		</s:RemoteObject>
+	</fx:Declarations>
+	<mx:ViewStack selectedIndex="0" id="configPanel" width="100%">
+		<mx:TitleWindow layout="vertical" verticalGap="5" title="Manage Tabs" width="100%">
+			<mx:HBox>
+				<mx:LinkButton icon="@Embed('com/sms/assets/images/createIcon.png')" label="Add Tab" click="onCreateTab()"/>
+				<mx:LinkButton icon="@Embed('com/sms/assets/images/refreshIcon.png')" label="Refresh" click="smsAMFObj.getAllTab(schoolId)"/>
+			</mx:HBox>
+			<mx:AdvancedDataGrid sortExpertMode="true" dataProvider="{tabGridData}" draggableColumns="false" width="100%">
+				<mx:columns>
+					<mx:AdvancedDataGridColumn headerText="Tab" dataField="menuLable"/>
+					<mx:AdvancedDataGridColumn width="80" headerText="Order" textAlign="center" dataField="order"/>
+					<mx:AdvancedDataGridColumn width="100" headerText="Action" textAlign="center" sortable="false">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:HBox horizontalGap="3">
+									<mx:LinkButton icon="@Embed('com/sms/assets/images/editIcon.png')" toolTip="Edit" visible="{data.menuLable+'' != 'Home'}" click="outerDocument.onEditTab(data)"/>
+									<mx:LinkButton icon="@Embed('com/sms/assets/images/delete.png')" toolTip="Delete" visible="{data.menuLable+'' != 'Home'}" click="outerDocument.onDeleteTab(data)"/>
+									<mx:LinkButton icon="{data.active+'' == '1' ? outerDocument.activeIcon : outerDocument.deactiveIcon}" toolTip="{data.active+'' == '1' ? 'Disable' : 'Enable'}" visible="{data.menuLable+'' != 'Home'}" click="outerDocument.onEnableDisableTab(data)"/>
+									<mx:LinkButton icon="@Embed('com/sms/assets/images/settingIcon.png')"  toolTip="Configure Content" click="outerDocument.onConfigTab(data)"/>
+								</mx:HBox>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</mx:TitleWindow>
+		<mx:TitleWindow layout="vertical" verticalGap="5" title="Manage Contents" width="100%">
+			<mx:HBox>
+				<mx:LinkButton icon="@Embed('com/sms/assets/images/createIcon.png')" label="Add Content" click="onCreateContent()"/>
+				<mx:LinkButton icon="@Embed('com/sms/assets/images/refreshIcon.png')" label="Refresh" click="smsAMFObj.getAllContent(schoolId, selectedTabId)"/>
+				<mx:LinkButton icon="@Embed('com/sms/assets/images/backIcon.png')" label="Back to Tab Management" click="configPanel.selectedIndex = 0"/>
+			</mx:HBox>
+			<mx:AdvancedDataGrid sortExpertMode="true" dataProvider="{contentGridData}" draggableColumns="false" width="100%">
+				<mx:columns>
+					<mx:AdvancedDataGridColumn width="150" headerText="Title" dataField="title"/>
+					<mx:AdvancedDataGridColumn headerText="Text" dataField="contentTxt"/>
+					<mx:AdvancedDataGridColumn width="100" headerText="Has Image" dataField="image"/>
+					<mx:AdvancedDataGridColumn width="80" headerText="Order" textAlign="center" dataField="order"/>
+					<mx:AdvancedDataGridColumn width="100" headerText="Action" textAlign="center" sortable="false">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:HBox horizontalGap="3">
+									<mx:LinkButton icon="@Embed('com/sms/assets/images/editIcon.png')" toolTip="Edit" click="outerDocument.onEditContent(data)"/>
+									<mx:LinkButton icon="@Embed('com/sms/assets/images/delete.png')" toolTip="Delete" click="outerDocument.onDeleteContent(data)"/>
+									<mx:LinkButton icon="{data.active+'' == '1' ? outerDocument.activeIcon : outerDocument.deactiveIcon}" toolTip="{data.active+'' == '1' ? 'Disable' : 'Enable'}" click="outerDocument.onEnableDisableContent(data)"/>
+								</mx:HBox>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</mx:TitleWindow>
+	</mx:ViewStack>
+</s:Application>
